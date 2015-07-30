@@ -191,12 +191,7 @@ end
 
 % Create the external process
 try
-    switch execcmd
-        case 'java'
-            [status, pid] = startProcessJRE(progname, arguments, env, workdir);
-        otherwise
-            [status, pid] = startProcess(progname, arguments, env, workdir);
-    end
+    [status, pid] = startProcess(progname, arguments, env, workdir);
     
     if status ~= 0
         error('Error while starting external co-simulation program.');
@@ -227,61 +222,8 @@ msg = '';
 
 end
 
+
 function [status, pid] = startProcess(cmd, args, env, workdir)
-% This helper function starts a new process of a given program in the
-% background and returns the status and process ID.
-% cmd: the command that will be executed
-% args: arguments, either a string or a cell of strings
-% env: environment variables, a cell of cells, each contains two or three
-%       strings:
-%       + the first is the env variable name
-%       + the second is the value if that env name does not exist.
-%       + the third is the value that will overwrite the current value.
-%      So, if the variable does not exist, then it will be created with
-%      value being the second string.  If it exists and the third string is
-%      provided, it will be overwritten with this string; otherwise, it
-%      will keep its current value.
-% workdir: working directory
-%
-% status: 0 if successful, != 0 if error (then status is error code)
-% (obsolete) msg: string message returned by the program (e.g. its standard output)
-% pid: process ID/object; this ID is often not used but may be useful
-% later.
-
-% Process input arguments
-if nargin >= 2
-    if ischar(args)
-        numArgs = 1;
-        args = {args};
-    elseif iscellstr(args)
-        numArgs = numel(args);
-    else
-        error('Arguments must be provided in a string or a cell array of strings.');
-    end
-else
-    numArgs = 0;
-end
-
-for kk = 1:numel(args)
-    cmd = [cmd ' ' args{kk}];
-end
-
-% Process and set env variables
-if nargin >= 3
-    assert(iscell(env), 'Environment variables must be provided as a cell array of cell arrays of strings.');
-    
-    for kk = 1:numel(env)
-        setenv(env{kk}{1}, env{kk}{2});
-    end
-end
-
-[status, result] = system([cmd ' &']);
-pid = 0;
-
-end
-
-
-function [status, pid] = startProcessJRE(cmd, args, env, workdir)
 % This helper function starts a new process of a given program in the
 % background and returns the status and process ID.
 % cmd: the command that will be executed
@@ -339,11 +281,17 @@ if verLessThan('matlab', '7.0.1')
     % -- Put code to run under MATLAB 7.0.0 and earlier here --
 else
     % -- Put code to run under MATLAB 7.0.1 and later here --
-    setenv('DYLD_LIBRARY_PATH', '/usr/local/bin:/opt/local/lib:')
+    if ~ispc
+        setenv('DYLD_LIBRARY_PATH', '/usr/local/bin:/opt/local/lib:');
+    end
 end
 
 % Run Command
-[status,~] = system([cmd '> mlep.log &'],'-echo');
+if ispc
+    [status,~] = system([cmd ' &'],'-echo'); %  '> mlep.log &' ,'-echo'
+else
+    [status,~] = system([cmd ' > mlep.log &'] ,'-echo'); %  '> mlep.log &' ,'-echo'
+end
 
 % Process id - not used
 pid = 0;

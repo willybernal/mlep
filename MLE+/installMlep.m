@@ -37,8 +37,8 @@ manualInstall = true;
 % Paths
 if ispc
     % Windows
-    eplusPath = 'C:\EnergyPlusV8-1-0';
-    javaPath = 'C:\Program Files (x86)\Java\jre7\bin';
+    eplusPath = 'C:\EnergyPlusV8-3-0';
+    javaPath = 'C:\Program Files\Java\jre1.8.0_51\bin';
 else
     % Unix
     eplusPath = '/Applications/EnergyPlus-8-3-0';
@@ -104,7 +104,7 @@ else %=====================================================================
     
     % Save Settings =======================================================
     mlepSaveSettings(mlepPath, eplusPath, javaPath, bcvtbPath);
-    disp('MLEP+: INSTALLATION COMPLETED!');
+    disp('MLE+: INSTALLATION COMPLETED!');
 end
 
 % Save Paths
