@@ -26,6 +26,7 @@ super_grt_rtw
 socket.cfg
 utilSocket.log
 *.log
+MLEPSETTINGS.mat
 
 # E+
 *.err
@@ -45,9 +46,15 @@ utilSocket.log
 *.mtd
 *.rdd
 in.idf
+*.dxf
+*.mtr
+*.rvaudit
+*.svg
 
 # Windows/Mac
 .DS_Store
+*.asv
+
 
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
 # should NOT be excluded as they contain compiler settings and other important
