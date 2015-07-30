@@ -14,7 +14,8 @@ Extract all files to a directory in your computer, for example **C:\software\mle
 Open Matlab and change the current directory to the **C:\software\mlep\MLE+** folder that has just been created.
 
 4. Run installMlep.m
-In Matlab, run the installation script installMlep.m located in **C:\software\mlep\MLE+\installMlep.m** and follow the instructions. This will install the GUI Layout Toolbox and add the necessary paths to the Matlab environment automatically. 
+In Matlab, run the installation script installMlep.m located in **C:\software\mlep\MLE+\installMlep.m** and follow the instructions. This will install the GUI Layout Toolbox and add the necessary paths to the Matlab environment automatically.
+
 **NOTE:** Read further installation instructions on **installMlep.m**
 
 5. Installation Screen
