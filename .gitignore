@@ -1,0 +1,54 @@
+# Build and Release Folders
+bin/
+bin-debug/
+bin-release/
+
+# Other files and folders
+.settings/
+
+# EnergyPlus outputs
+Output/*
+Output
+
+# Code Generation
+*.mexa64
+*.mex*
+*.mexmaci64
+slprj
+super_grt_rtw
+
+# Matlab
+*.autosave
+*~
+
+# MLE+
+*.6
+socket.cfg
+utilSocket.log
+*.log
+
+# E+
+*.err
+*.eio
+*.eso
+*.bnd
+*.audit
+*.end
+*.mdd
+*.shd
+*.sql
+*.csv
+*.idd
+*.ini
+*.epw
+*.htm
+*.mtd
+*.rdd
+in.idf
+
+# Windows/Mac
+.DS_Store
+
+# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
+# should NOT be excluded as they contain compiler settings and other important
+# information for Eclipse / Flash Builder.
