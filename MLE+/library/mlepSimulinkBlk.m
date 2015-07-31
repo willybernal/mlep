@@ -1,8 +1,7 @@
-function mlepSimulinkBlk(block)
 %MLEPSIMULINKBLK M-S-Function for E+ Cosimulation block for Simulink.
 %   This Matlab S-Function implements the Simulink block for EnergyPlus
 %   Cosimulation.  It is part of the MLE+ toolbox.  Open the MLE+ Simulink
-%   library mlepBlockset.mdl to use this block.
+%   library mlepLibrary.slx to use this block.
 %
 % (C)   2009-2013 by Truong Nghiem(truong@seas.upenn.edu)
 %       2010-2013 by Willy Bernal(willyg@seas.upenn.edu)
@@ -14,326 +13,373 @@ function mlepSimulinkBlk(block)
 %   2013-12-30 Creating server and and accepting socket split into two 
 %   processes.
 
-% The setup method is used to setup the basic attributes of the
-% S-function such as ports, parameters, etc. Do not add any other
-% calls to the main body of the function.
-setup(block);
-
-%endfunction
-
-% Function: setup ===================================================
-% Abstract:
-%   Set up the S-function block's basic characteristics such as:
-%   - Input ports
-%   - Output ports
-%   - Dialog parameters
-%   - Options
+%% MLEPSIMULINKBLK M-S-Function for E+ Cosimulation block for Simulink.
+%   This Matlab S-Function implements the Simulink block for EnergyPlus
+%   Cosimulation.  It is part of the MLE+ toolbox.  Open the MLE+ Simulink
+%   library mlepLibrary.slx to use this block.
 %
-%   Required         : Yes
-%   C-Mex counterpart: mdlInitializeSizes
+% This S-function is modified from the original function written by Truong
+% Nghiem and distributed with MLE+ v. 1.1. It is modified and redistributed
+% under the [TO DO: FIGURE THIS OUT] license.
 %
+% SYNTAX:
+%   mlepSimulinkBlk(block)
+%
+% INPUTS:
+%   block =     Simulink block which uses the S-function
+%
+% COMMENTS:
+% 1. This is a Simulink S-function. Its structure and conventions conform
+%    with the Simulink documentation for S-functions; for more info. see
+%    doc('S-Function').
+% 
+% 2. This function is not intended for use outside of the NREL Campus
+%    Energy Modeling Simulink library; therefore the error checking and
+%    documentation are minimal. View the code to see what is going on.
+%
+% HISTORY:
+%   Nov. 2010       Original version by Truong Nghiem
+%                   (nghiem@seas.upenn.edu) with support for BCVTB
+%                   protocol v. 2.
+%                   
+%                   Original code (C) 2010 by Truong Nghiem;
+%                   reused with permission.
+%
+%   Aug. 2013       Modified by Willy Bernal (willyg@seas.upenn.edu) for
+%                   use with the NREL Campus Energy Modeling project
+%
+%   Nov. 2013       Modified by Stephen Frank for readability and ease of
+%                   use
+%
+%   Jul. 2015       Modified by Willy Bernal to work for the MLE+
+%                   installation and not only Campus Energy Modeling 
+%                   Project. 
+%
+%
+
+function mlep_sfun(block)
+    % Set the basic attributes of the S-function and registers the required
+    % callbacks
+    setup(block);
+end
+
+%% Setup
+% Set up the S-function block's basic characteristics
 function setup(block)
+    %% Parameters
+    % Register the number of parameters
+    block.NumDialogPrms = 11;
+    
+    % TO DO: Implement CheckParameters()
+    
+    % Manually trigger CheckParameters() to check the dialog parameters
+    %CheckParameters(block)
+    
+    % Parse the dialog parameters
+    ParseParameters(block)
+    
+    % Retrieve parameters from user data
+    d = get_param(block.BlockHandle, 'UserData');
 
-% Register number of ports
-block.NumInputPorts  = 1;  % real, int, and boolean signals
-block.NumOutputPorts = 3;  % flag, time, real, int, and boolean outputs
+    %% Ports
+    % Input ports:
+    %   1 - Vector of EnergyPlus inputs
+    %
+    % Output ports:
+    %   1 - Termination/error flag
+    %   2 - EnergyPlus time stamp
+    %   3 - Vector of EnergyPlus outputs
+    
+    % Register the number of input ports
+    block.NumInputPorts  = 1;
+    
+    % Register the number of output ports
+    block.NumOutputPorts = 3;
 
-% Register parameters
-% The dialog parameters
-% progname, modelfile, weatherfile, workdir, timeout,
-% port, host, bcvtbdir, deltaT, noutputd
-block.NumDialogPrms  = 10;
+    % Setup port properties to be dynamic
+    block.SetPreCompInpPortInfoToDynamic;
+    block.SetPreCompOutPortInfoToDynamic;
+    
+    % Override input port properties
+    block.InputPort(1).Dimensions  = -1;            % inherited size
+    block.InputPort(1).DatatypeID  = 0;             % double
+    block.InputPort(1).Complexity  = 'Real';
+    block.InputPort(1).DirectFeedthrough = true;
+    
+    % Override output port properties
+    block.OutputPort(1).Dimensions  = 1;            % flag
+    block.OutputPort(1).DatatypeID  = 0;            % double
+    block.OutputPort(1).Complexity  = 'Real';
+    block.OutputPort(1).SamplingMode = 'sample';
 
-% Setup port properties to be inherited or dynamic
-block.SetPreCompInpPortInfoToDynamic;
-block.SetPreCompOutPortInfoToDynamic;
+    block.OutputPort(2).Dimensions  = 1;            % time
+    block.OutputPort(2).DatatypeID  = 0;            % double
+    block.OutputPort(2).Complexity  = 'Real';
+    block.OutputPort(2).SamplingMode = 'sample';
 
-% Override input port properties
-block.InputPort(1).Dimensions  = -1;  % inherited size
-block.InputPort(1).DatatypeID  = 0;  % double
-block.InputPort(1).Complexity  = 'Real';
-block.InputPort(1).DirectFeedthrough = true; % false
+    nDim = d.dialog.nout;
+    block.OutputPort(3).Dimensions  = nDim;         % output vector
+    block.OutputPort(3).DatatypeID  = 0;            % double
+    block.OutputPort(3).Complexity  = 'Real';
+    block.OutputPort(3).SamplingMode = 'sample';
 
-% block.InputPort(2).Dimensions  = -1;  % inherited size
-% block.InputPort(2).DatatypeID  = -1;  % inherited type
-% block.InputPort(2).Complexity  = 'Real';
-% block.InputPort(2).DirectFeedthrough = false;
-% 
-% block.InputPort(3).Dimensions        = -1;  % inherited size
-% block.InputPort(3).DatatypeID  = -1;  % inherited type
-% block.InputPort(3).Complexity  = 'Real';
-% block.InputPort(3).DirectFeedthrough = false;
+    %% Options
+    % Register the sample times: Discrete; no offset
+    block.SampleTimes = [d.dialog.time_step 0];
+    
+    % Set the block simStateCompliance to default
+    % (i.e., same as a built-in block)
+    block.SimStateCompliance = 'DefaultSimState';
 
+    %% Register S-function methods
+    % Initialize conditions
+    block.RegBlockMethod('InitializeConditions', @InitializeConditions);
+    
+    % Set input port properties
+    block.RegBlockMethod('SetInputPortDimensions', @SetInputPortDimensions);
+    block.RegBlockMethod('SetInputPortSamplingMode', @SetInputPortSamplingMode);
+    
+    % Check dialog parameters
+    %block.RegBlockMethod('CheckParameters', @CheckParameters);
+    
+	% Simulation start
+    block.RegBlockMethod('Start', @Start);
+    
+    % Compute output (required)
+    block.RegBlockMethod('Outputs', @Outputs);
+    
+    % Simulation end (required)
+    block.RegBlockMethod('Terminate', @Terminate);
+    
+end
 
-% Override output port properties
-block.OutputPort(1).Dimensions  = 1;  % flag
-block.OutputPort(1).DatatypeID  = 0; % double
-block.OutputPort(1).Complexity  = 'Real';
-block.OutputPort(1).SamplingMode = 'sample';
+%% Parse Parameters
+% Parse the dialog parameters and store them in the block user data
+function ParseParameters(block)
+    % Get existing user data, if any
+    d = get_param(block.BlockHandle, 'UserData');
+    if isempty(d)
+        d = struct();
+    end
+    
+    % Define names of dialog parameters (in order)
+    dialogNames = { ...
+        'work_dir', ...         % Working directory
+        'rel_path', ...         % Working directory is relative path (T/F)
+        'fname', ...            % Name of IDF file
+        'weather_profile', ...  % Name of weather profile file
+        'time_step', ...        % Model time step
+        'nout', ...             % Number of real outputs
+        'timeout', ...          % Communication timeout
+        'eplus_path', ...       % Path to EnergyPlus executable
+        'bcvtb_dir', ...        % Path to BCVTB library
+        'port', ...             % Socket port
+        'host' };               % Host machine
+    
+    % Put dialog parameters into data structure
+    d.dialog = struct();
+    for i = 1:length(dialogNames)
+        d.dialog.(dialogNames{i}) = block.DialogPrm(i).Data;
+    end
+    
+    % Store in block user data; set as persistent
+    set_param(block.BlockHandle, 'UserData', d);
+    set_param(block.BlockHandle, 'UserDataPersistent', 'on');
+end
 
-block.OutputPort(2).Dimensions  = 1;  % time
-block.OutputPort(2).DatatypeID  = 0; % double
-block.OutputPort(2).Complexity  = 'Real';
-block.OutputPort(2).SamplingMode = 'sample';
-
-nDim = block.DialogPrm(10).Data;  % real outputs
-if nDim < 1, nDim = 1; end
-block.OutputPort(3).Dimensions  = nDim;
-block.OutputPort(3).DatatypeID  = 0; % double
-block.OutputPort(3).Complexity  = 'Real';
-block.OutputPort(3).SamplingMode = 'sample';
-
-% nDim = block.DialogPrm(11).Data;  % real outputs
-% if nDim < 1, nDim = 1; end
-% block.OutputPort(4).Dimensions  = nDim;  % int outputs
-% block.OutputPort(4).DatatypeID  = 0; % double
-% block.OutputPort(4).Complexity  = 'Real';
-% block.OutputPort(4).SamplingMode = 'sample';
-% 
-% nDim = block.DialogPrm(12).Data;  % real outputs
-% if nDim < 1, nDim = 1; end
-% block.OutputPort(5).Dimensions  = nDim;  % bool outputs
-% block.OutputPort(5).DatatypeID  = 0; % double
-% block.OutputPort(5).Complexity  = 'Real';
-% block.OutputPort(5).SamplingMode = 'sample';
-
-% Register sample times
-%  [0 offset]            : Continuous sample time
-%  [positive_num offset] : Discrete sample time
-%
-%  [-1, 0]               : Inherited sample time
-%  [-2, 0]               : Variable sample time
-block.SampleTimes = [block.DialogPrm(9).Data 0];
-
-% Specify the block simStateCompliance. The allowed values are:
-%    'UnknownSimState', < The default setting; warn and assume DefaultSimState
-%    'DefaultSimState', < Same sim state as a built-in block
-%    'HasNoSimState',   < No sim state
-%    'CustomSimState',  < Has GetSimState and SetSimState methods
-%    'DisallowSimState' < Error out when saving or restoring the model sim state
-block.SimStateCompliance = 'DefaultSimState';
-
-%% -----------------------------------------------------------------
-%% The M-file S-function uses an internal registry for all
-%% block methods. You should register all relevant methods
-%% (optional and required) as illustrated below. You may choose
-%% any suitable name for the methods and implement these methods
-%% as local functions within the same file. See comments
-%% provided for each function for more information.
-%% -----------------------------------------------------------------
-
-% block.RegBlockMethod('PostPropagationSetup',    @DoPostPropSetup);
-block.RegBlockMethod('Start', @Start);
-block.RegBlockMethod('InitializeConditions', @InitializeConditions);
-block.RegBlockMethod('Outputs', @Outputs);     % Required
-% block.RegBlockMethod('Update', @Update);
-% block.RegBlockMethod('Derivatives', @Derivatives);
-block.RegBlockMethod('Terminate', @Terminate); % Required
-block.RegBlockMethod('SetInputPortDimensions', @SetInputPortDimensions);
-block.RegBlockMethod('SetInputPortSamplingMode', @SetInputPortSamplingMode);
-
-
-%%=================================================
-%end setup
-
-%%
-%% PostPropagationSetup:
-%%   Functionality    : Setup work areas and state variables. Can
-%%                      also register run-time methods here
-%%   Required         : No
-%%   C-Mex counterpart: mdlSetWorkWidths
-%%
-% function DoPostPropSetup(block)
-% block.NumDworks = 1;
-%   
-% block.Dwork(1).Name            = 'x1';
-% block.Dwork(1).Dimensions      = 1;
-% block.Dwork(1).DatatypeID      = 0;      % double
-% block.Dwork(1).Complexity      = 'Real'; % real
-% block.Dwork(1).UsedAsDiscState = true;
 
 %% Set sampling mode for input ports
+% Not sure if really needed?
 function SetInputPortSamplingMode(block, port, mode)
-block.InputPort(port).SamplingMode = mode;
+    block.InputPort(port).SamplingMode = mode;
+end
 
-% endfunction
 
 %% Set dimension for input ports
+% Not sure if really needed?
 function SetInputPortDimensions(block, port, dimsInfo)
-block.InputPort(port).Dimensions = dimsInfo;
-
-% endfunction
-
+    block.InputPort(port).Dimensions = dimsInfo;
+end
 
 
-
-%%
-%% Start:
-%%   Functionality    : Called once at start of model execution. If you
-%%                      have states that should be initialized once, this 
-%%                      is the place to do it.
-%%   Required         : No
-%%   C-MEX counterpart: mdlStart
-%%
+%% Start
 function Start(block)
-% Dialog parameters
-% progname, modelfile, weatherfile, workdir, timeout,
-% port, host, bcvtbdir, deltaT, noutputd,
-% noutputi, noutputb
-
-%% Start MLE+ 
-% Create the mlepProcess object and start EnergyPlus
-processobj = mlepProcess;
-processobj.program = block.DialogPrm(1).Data;
-processobj.workDir = block.DialogPrm(4).Data;
-if ~isempty(block.DialogPrm(8).Data)
-    processobj.bcvtbDir = block.DialogPrm(8).Data;
-end
-%processobj.bcvtbDir = block.DialogPrm(8).Data;
-processobj.arguments = [block.DialogPrm(2).Data ' ' block.DialogPrm(3).Data];
-processobj.acceptTimeout = block.DialogPrm(5).Data;
-processobj.port = block.DialogPrm(6).Data;
-processobj.host= block.DialogPrm(7).Data;
-
-% Start processobj
-[status, msg] = processobj.start;
-processobj.status = status;
-processobj.msg = msg;
-
-if status ~= 0
-    error('Cannot start EnergyPlus: %s.', msg);
-end
-
-% Save processobj to UserData of the block
-set_param(block.BlockHandle, 'UserData', processobj);
-%endfunction
-
-
-%%
-%% InitializeConditions:
-%%   Functionality    : Called at the start of simulation and if it is 
-%%                      present in an enabled subsystem configured to reset 
-%%                      states, it will be called when the enabled subsystem
-%%                      restarts execution to reset the states.
-%%   Required         : No
-%%   C-MEX counterpart: mdlInitializeConditions
-%%
-function InitializeConditions(block)
-% Get processobj
-processobj = get_param(block.BlockHandle, 'UserData');
-if ~isa(processobj, 'mlepProcess')
-    error('Internal error: Cosimulation process object is lost.');
-end
-
-%% Accept Socket 
-[status, msg] = processobj.acceptSocket;
-if status ~= 0
-    error('Cannot start EnergyPlus: %s.', msg);
-end
-% % Save processobj to UserData of the block
-set_param(block.BlockHandle, 'UserData', processobj);
-%end InitializeConditions
-
-
-%%
-%% Outputs:
-%%   Functionality    : Called to generate block outputs in
-%%                      simulation step
-%%   Required         : Yes
-%%   C-MEX counterpart: mdlOutputs
-%%
-function Outputs(block)
-
-% Get processobj
-processobj = get_param(block.BlockHandle, 'UserData');
-if ~isa(processobj, 'mlepProcess')
-    error('Internal error: Cosimulation process object is lost.');
-end
-
-
-if processobj.isRunning
+    %% Setup
+    % Load user data (includes parsed dialog parameters)
+    d = get_param(block.BlockHandle, 'UserData');
     
-    VERNUMBER = 2;
+    %% Start MLE+
+    % Create the mlepProcess object
+    processobj = mlepProcess;
     
-    % Send signals to E+
-    rvalues1 = block.InputPort(1).Data;
-%     ivalues = block.InputPort(2).Data;
-%     bvalues = block.InputPort(3).Data;
-
-    % Read from E+
-    readpacket = processobj.read;
-    
-    if isempty(readpacket)
-        error('Cannot read from EnergyPlus.');
-    end
-    
-    % Currently, ivalues and bvalues are not used
-    [flag, timevalue, rvalues] = mlepDecodePacket(readpacket);
-    if flag ~= 0
-%         processobj.stop(false);
-        processobj.stop;
-        block.OutputPort(1).Data = flag;
-        return;
+    % Parse working directory path
+    if isempty(d.dialog.work_dir)
+        % Empty = use current working directory
+        work_dir = [pwd];
+        
+    elseif d.dialog.rel_path
+        % Parse relative path
+        if strcmp(d.dialog.work_dir(1), filesep)
+            work_dir = [pwd d.dialog.work_dir];
+        else
+            work_dir = [pwd filesep d.dialog.work_dir];
+        end
     else
-        if isempty(rvalues), rvalues = 0; end
-%         if isempty(ivalues), ivalues = 0; end
-%         if isempty(bvalues), bvalues = 0; end
-
-        % Set outputs of block
-        block.OutputPort(1).Data = flag;
-        block.OutputPort(2).Data = timevalue;
-        block.OutputPort(3).Data = rvalues(:);
-%         block.OutputPort(4).Data = ivalues(:);
-%         block.OutputPort(5).Data = bvalues(:);
+        % Use absolute path
+        work_dir = d.dialog.work_dir;
+    end
+    if strcmp(work_dir(end), filesep)
+        % Strip trailing file sep
+        work_dir = work_dir(1:end-1);
     end
     
-    % Write to E+
-    processobj.write(mlepEncodeRealData(VERNUMBER, 0, block.CurrentTime, rvalues1));
+    % Parse model file location
+    fname = [work_dir filesep d.dialog.fname];
+    if ~strcmpi(d.dialog.fname(end-3:end), '.idf')
+        % Strip extension
+        fname = [fname '.idf'];
+    end
+    
+    % Check paths
+    assert( ...
+        exist(work_dir, 'dir') > 0, ...
+        'EnergyPlusCosim:invalidWorkingDirectory', ...
+        'Specified working directory %s does not exist.', ...
+        work_dir );
+    assert( ...
+        exist(fname, 'file') > 0, ...
+        'EnergyPlusCosim:invalidModelFile', ...
+        'Specified IDF file %s does not exist.', ...
+        fname );
+    
+    % For EnergyPlus call, strip extensions
+    fname = fname(1:end-4);
+    
+    % Parse weather file name
+    if strcmpi(d.dialog.weather_profile(end-3:end), '.epw')
+        % Strip extension
+        weather_profile = d.dialog.weather_profile(1:end-4);
+    else
+        weather_profile = d.dialog.weather_profile;
+    end
+    
+    % Parse arguments
+    arg = [fname ' ' weather_profile];
+    
+    % Setup up MLE+
+    processobj.workDir =        work_dir;
+    processobj.arguments =      arg;
+    processobj.acceptTimeout =  d.dialog.timeout*1000; % s -> ms
+    processobj.port =           d.dialog.port;
+    processobj.host =           d.dialog.host;
+    if ~isempty(d.dialog.eplus_path)
+        processobj.program =    d.dialog.eplus_path;
+    end
+    if ~isempty(d.dialog.bcvtb_dir)
+        processobj.bcvtbDir =   d.dialog.bcvtb_dir;
+    end
+
+    % Start MLE+ process
+    [status, msg] = processobj.start;
+    processobj.status = status;
+    processobj.msg = msg;
+
+    assert( ...
+        status == 0, ...
+        'EnergyPlusCosim:startupError', ...
+        'Cannot start EnergyPlus: %s.', msg );
+
+    % Save processobj to UserData of the block
+    d.processobj = processobj;
+    set_param(block.BlockHandle, 'UserData', d);
+
 end
 
-%end Outputs
+%% InitializeConditions:
+function InitializeConditions(block)
+    % Get processobj
+    d = get_param(block.BlockHandle, 'UserData');
+    processobj = d.processobj;
+    assert( ...
+        isa(processobj, 'mlepProcess'), ...
+        'EnergyPlusCosim:lostCosimulationProcess', ...
+        'Internal error: Cosimulation process object is lost.' );
 
-%%
-%% Update:
-%%   Functionality    : Called to update discrete states
-%%                      during simulation step
-%%   Required         : No
-%%   C-MEX counterpart: mdlUpdate
-%%
-% function Update(block)
-% 
-% block.Dwork(1).Data = block.InputPort(1).Data;
+    %% Accept Socket 
+    [status, msg] = processobj.acceptSocket;
+        assert( ...
+        status == 0, ...
+        'EnergyPlusCosim:startupError', ...
+        'Cannot start EnergyPlus: %s.', msg );
 
-%end Update
+    % Save processobj back to UserData of the block
+    set_param(block.BlockHandle, 'UserData', d);
 
-%%
-%% Derivatives:
-%%   Functionality    : Called to update derivatives of
-%%                      continuous states during simulation step
-%%   Required         : No
-%%   C-MEX counterpart: mdlDerivatives
-%%
-% function Derivatives(block)
+end
 
-%end Derivatives
 
-%%
-%% Terminate:
-%%   Functionality    : Called at the end of simulation for cleanup
-%%   Required         : Yes
-%%   C-MEX counterpart: mdlTerminate
-%%
+%% Outputs
+function Outputs(block)
+    % Get processobj
+    d = get_param(block.BlockHandle, 'UserData');
+    processobj = d.processobj;
+    assert( ...
+        isa(processobj, 'mlepProcess'), ...
+        'EnergyPlusCosim:lostCosimulationProcess', ...
+        'Internal error: Cosimulation process object is lost.' );
+
+    % Step EnergyPlus and get outputs
+    if processobj.isRunning
+        % MLE+ version number
+        VERNUMBER = 2;
+
+        % Write data to E+
+        rvalues = block.InputPort(1).Data;
+        processobj.write( ...
+            mlepEncodeRealData(VERNUMBER, 0, block.CurrentTime, rvalues));
+        
+        % Read data from E+
+        readpacket = processobj.read;
+        assert( ...
+            ~isempty(readpacket), ...
+            'EnergyPlusCosim:readError', ...
+            'Could not read data from EnergyPlus.' );
+
+        % Decode data
+        % (Currently, ivalues and bvalues are not used)
+        [flag, timevalue, rvalues] = mlepDecodePacket(readpacket);
+        
+        % Process output
+        if flag ~= 0
+            processobj.stop(false);
+            block.OutputPort(1).Data = flag;
+            
+        else
+            % Case where no data is returned
+            if isempty(rvalues), rvalues = 0; end
+
+            % Set outputs of block
+            block.OutputPort(1).Data = flag;
+            block.OutputPort(2).Data = timevalue;
+            block.OutputPort(3).Data = rvalues(:);
+        end
+    end
+
+end
+
+%% Terminate
 function Terminate(block)
-
-% Get processobj
-processobj = get_param(block.BlockHandle, 'UserData');
-if ~isa(processobj, 'mlepProcess')
-    error('Internal error: Cosimulation process object is lost.');
+    % Get processobj
+    d = get_param(block.BlockHandle, 'UserData');
+    processobj = d.processobj;
+    assert( ...
+        isa(processobj, 'mlepProcess'), ...
+        'EnergyPlusCosim:lostCosimulationProcess', ...
+        'Internal error: Cosimulation process object is lost.' );
+    
+    % Stop the running process
+    if processobj.isRunning
+        processobj.stop(true);
+    end
+    
 end
-
-if processobj.isRunning
-%     processobj.stop(true);
-    processobj.stop;
-end
-
-%end Terminate

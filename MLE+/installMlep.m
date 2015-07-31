@@ -57,7 +57,7 @@ addpath(fullfile(mlepPath,'install'));
 %addpath(fullfile(mlepPath,'settings'));
 addpath(fullfile(mlepPath,'version'));
 % addpath(fullfile(mlepPath,'mlepHelp'));
-addpath(fullfile(mlepPath,'library'));
+addpath(genpath(fullfile(mlepPath,'library')));
 bcvtbPath = fullfile(mlepPath,'bcvtb');
 addpath(bcvtbPath);
 

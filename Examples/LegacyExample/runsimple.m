@@ -13,7 +13,7 @@
 %
 % This script is free software.
 %
-% (C) 2010-2013 by Truong Nghiem and Willy Bernal (nghiem@seas.upenn.edu, Willy.BernalHeredia@nrel.gov)
+% (C) 2010-2015 by Truong Nghiem and Willy Bernal (nghiem@seas.upenn.edu, Willy.BernalHeredia@nrel.gov)
 %
 % CHANGES:
 %   2012-04-23  Fix an error with E+ 7.0.0: Matlab must read data from E+
@@ -22,6 +22,9 @@
 %               system settings.
 %   2011-04-28  Update to new version of MLE+ which uses Java for running
 %               E+.
+%   2015-07-30  Update to new version of MLE+ which uses the Matlab system 
+%               call for running E+. Updated BCVTB libraries to 1.5. 
+%               
 
 %% Create an mlepProcess instance and configure it
 
