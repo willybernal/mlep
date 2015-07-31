@@ -51,14 +51,14 @@ filename = mfilename('fullpath');
 
 % Add Path
 % addpath(mlepPath);
-addpath(genpath(fullfile(mlepPath,'core')));
+addpath(genpath(fullfile(mlepPath,'MLE+','core')));
 % addpath(fullfile(mlepPath,'gui'));
-addpath(genpath(fullfile(mlepPath,'install')));
+addpath(genpath(fullfile(mlepPath,'MLE+','install')));
 %addpath(fullfile(mlepPath,'settings'));
-addpath(genpath(fullfile(mlepPath,'version')));
+addpath(genpath(fullfile(mlepPath,'MLE+','version')));
 % addpath(fullfile(mlepPath,'mlepHelp'));
-addpath(genpath(fullfile(mlepPath,'library')));
-bcvtbPath = fullfile(mlepPath,'bcvtb');
+addpath(genpath(fullfile(mlepPath,'MLE+','library')));
+bcvtbPath = fullfile(mlepPath,'MLE+','bcvtb');
 addpath(bcvtbPath);
 
 % Installation Dialog
