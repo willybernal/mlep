@@ -51,11 +51,11 @@ filename = mfilename('fullpath');
 
 % Add Path
 % addpath(mlepPath);
-addpath(fullfile(mlepPath,'core'));
+addpath(genpath(fullfile(mlepPath,'core')));
 % addpath(fullfile(mlepPath,'gui'));
-addpath(fullfile(mlepPath,'install'));
+addpath(genpath(fullfile(mlepPath,'install')));
 %addpath(fullfile(mlepPath,'settings'));
-addpath(fullfile(mlepPath,'version'));
+addpath(genpath(fullfile(mlepPath,'version')));
 % addpath(fullfile(mlepPath,'mlepHelp'));
 addpath(genpath(fullfile(mlepPath,'library')));
 bcvtbPath = fullfile(mlepPath,'bcvtb');

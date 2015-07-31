@@ -57,7 +57,7 @@
 %
 %
 
-function mlep_sfun(block)
+function mlepSimulinkBlk(block)
     % Set the basic attributes of the S-function and registers the required
     % callbacks
     setup(block);
@@ -333,10 +333,8 @@ function Outputs(block)
         % MLE+ version number
         VERNUMBER = 2;
 
-        % Write data to E+
-        rvalues = block.InputPort(1).Data;
-        processobj.write( ...
-            mlepEncodeRealData(VERNUMBER, 0, block.CurrentTime, rvalues));
+        % Send signals to E+
+        rvalues1 = block.InputPort(1).Data;
         
         % Read data from E+
         readpacket = processobj.read;
@@ -351,9 +349,9 @@ function Outputs(block)
         
         % Process output
         if flag ~= 0
-            processobj.stop(false);
+            processobj.stop;
             block.OutputPort(1).Data = flag;
-            
+            return;
         else
             % Case where no data is returned
             if isempty(rvalues), rvalues = 0; end
@@ -363,6 +361,11 @@ function Outputs(block)
             block.OutputPort(2).Data = timevalue;
             block.OutputPort(3).Data = rvalues(:);
         end
+        
+        % Write data to E+
+        processobj.write( ...
+            mlepEncodeRealData(VERNUMBER, 0, block.CurrentTime, rvalues1));
+        
     end
 
 end
