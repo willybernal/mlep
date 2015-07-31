@@ -23,6 +23,6 @@ Go to **Examples/LegacyExample** and open **simple.slx**. Change the settings ac
 
 
 # Simulink Block Configuration
-![Windows Settings](./MLE+/figs/mlep_setting_windows.png).
+![Windows Settings](./MLE+/figs/mlep_setting_windows.png = 100x20).
 
 
