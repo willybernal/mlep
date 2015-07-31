@@ -299,16 +299,32 @@ classdef mlepProcess < handle
     
     methods (Access=private)
         function closeCommSockets(obj)
-            if isjava(obj.commSocket)
-                obj.commSocket.close;
-                obj.commSocket = [];
+            % Close serverSocket
+            if isjava(obj.serverSocket)
+                obj.serverSocket.close();
             end
+            
+            % Close commSocket
+            if isjava(obj.commSocket)
+                obj.commSocket.close();
+            end
+            
+            % Close Reader
+            if isjava(obj.reader)
+                obj.reader.close();
+            end
+            
+            % Close Writer
+            if isjava(obj.writer)
+                obj.writer.close();
+            end
+            
+            % Delete Java Objects
             obj.reader = [];
             obj.writer = [];
-            % if isjava(obj.serverSocket)
-            %     obj.serverSocket.close;
-            %     obj.serverSocket = [];
-            % end
+            obj.serverSocket = [];
+            obj.commSocket = [];
+            
         end
         
         function createStreams(obj)
