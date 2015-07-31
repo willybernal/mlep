@@ -1,6 +1,8 @@
 # MLE+
 MLE+ is an open-source Matlab/Simulink toolbox for co-simulation with the whole-building energy simulator EnergyPlus. It is designed for engineers and researchers who are familiar with Matlab and Simulink and want to use these software tools in building energy simulation.
 
+<img align="middle" src="./MLE+/figs/overview_test.png" height="400">
+
 **NOTE:** MLE+ has been tested on Matlab 2015a running on Mac and Windows. 
 
 # Installation
@@ -23,4 +25,18 @@ Go to **Examples/LegacyExample** and open **simple.slx**. Change the settings ac
 
 
 # Simulink Block Configuration
-On the MLE+ Cosimulation Block MLE+ tab, make sure you change the 
+Windows Configuration:
+
+<img align="middle" src="./MLE+/figs/mlep_setting_windows.png" height="400">
+
+Mac Configuration:
+
+<img align="middle" src="./MLE+/figs/mlep_settings_mac.png" height="450">
+
+# Error
+<img align="middle" src="./MLE+/figs/AcceptTimeOut_Error.png" height="300">
+* The image MLE+ settings are correctly set in Simulink.
+* Check mlep.log & eplus_name_file.err. 
+
+<img align="middle" src="./MLE+/figs/Debug_Files.png" height="200">
+
