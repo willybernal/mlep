@@ -23,6 +23,6 @@ Go to **Examples/LegacyExample** and open **simple.slx**. Change the settings ac
 
 
 # Simulink Block Configuration
-![Windows Settings](MLE+/figs/mlep_settings_windows.png?raw=true "Windows Settings").
+![Windows Settings](./MLE+/figs/mlep_setting_windows.png).
 
 
