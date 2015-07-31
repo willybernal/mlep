@@ -5,7 +5,7 @@ MLE+ is an open-source Matlab/Simulink toolbox for co-simulation with the whole-
 
 # Installation
 1. Download MLE+
-You can download the latest version from here ([Visit GitHub!](https://www.github.com)) or clone this repository
+You can download the latest version from [here!](https://github.com/willybernal/mlep/archive/master.zip)) or clone this repository
 
 2. Extract files
 Extract all files to a directory in your computer, for example **C:\software\mlep**.
