@@ -342,10 +342,13 @@ classdef mlepProcess < handle
             if noSettings
                 % Try to run mlepInit
                 if exist('installMlep', 'file') == 2
-                    %mlepInit(,'',obj.bcvtbDir);
+                    % Run installation script
                     installMlep;
                     noSettings = isempty(MLEPSETTINGS) || ~isstruct(MLEPSETTINGS);
                 end
+                msg = 'Load MLEPSETTINGS.mat or run installMlep.m again.';
+                disp(msg);
+                error('Error loading MLE+ settings: Load MLEPSETTINGS.mat or run installMlep.m again.');
             end
             
             if noSettings || ~isfield(MLEPSETTINGS, 'version')

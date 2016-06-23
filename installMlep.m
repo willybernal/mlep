@@ -26,7 +26,7 @@
 %       % Unix
 %       eplusPath = '/Applications/EnergyPlus-8-3-0';
 %   end
-% 
+%
 % Last Modified by Willy Bernal - Willy.BernalHeredia@nrel.gov 30-Jul-2015
 
 %% MODIFY
@@ -73,38 +73,20 @@ if ~manualInstall %========================================================
 else %=====================================================================
     % Manual Install
     if ispc
-%         if ~exist([eplusPath filesep 'RunEPlus_orig.bat'], 'file') == 2
-%             % Rename RunEPlus.bat to RunEPlus_orig.bat
-%             [status1,message,messageid] = ...
-%                 copyfile(fullfile(eplusPath,'RunEPlus.bat'),...
-%                 fullfile(eplusPath,'RunEPlus_orig.bat'),'f');
-%             
-%             % Copy RunEPlus.bat
-%             [status2,message,messageid] = ...
-%                 copyfile(fullfile(mlepPath,'settings','RunEPlus.bat'),...
-%                 fullfile(eplusPath,'RunEPlus.bat'),'f');
-%             
-%             % Check Whether Replacing RunEPlus was successfull
-%             status = status1 && status2;
-%             if ~status
-%                 disp('ERROR: CHECK E+ PATHS AND JAVA PATHS');
-%                 disp(message);
-%                 disp(messageid);
-%             else
-%                 disp('MLE+: INSTALLATION COMPLETED!');
-%             end
-%         else
-%             disp('MLE+: INSTALLATION COMPLETED!');
-%         end
-        
-    else 
+        % No Changes
+    else
         % Java Path
         javaPath = '';
     end
     
     % Save Settings =======================================================
     mlepSaveSettings(mlepPath, eplusPath, javaPath, bcvtbPath);
-    disp('MLE+: INSTALLATION COMPLETED!');
+    %%
+    disp('================================');
+    disp('        MLE+ COSIMULATION       ');
+    disp('     INSTALLATION COMPLETED     ');
+    disp(' Install everytime Matlab opens.');
+    disp('================================');
 end
 
 % Save Paths
