@@ -382,6 +382,8 @@ function Terminate(block)
     
     % Stop the running process
     if processobj.isRunning
+        % TO DO: Check why it stoped
+        % Send a signal.
         processobj.stop(true);
     end
     
