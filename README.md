@@ -1,7 +1,7 @@
 # MLE+
 MLE+ is an open-source Matlab/Simulink toolbox for co-simulation with the whole-building energy simulator EnergyPlus. It is designed for engineers and researchers who are familiar with Matlab and Simulink and want to use these software tools in building energy simulation.
 
-<img align="middle" src="./MLE+/figs/overview_test.png" height="400">
+<img align="middle" src="./doc/pics/overview.png" height="400">
 
 **NOTE:** MLE+ has been tested on Matlab 2015a running on Mac and Windows. 
 
