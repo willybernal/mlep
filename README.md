@@ -71,11 +71,13 @@ The following versions have been tested and should be running without problems.
 3. Microgrid testing.
 
 # Awards
-1. Best demo presentation.
+* [Best Demo Award at BuildSys 2012](http://www.buildsys.org/2012/),
+4th ACM Workshop On Embedded Systems For Energy-Efficiency In Buildings,
+Toronto, Canada.
 
 # Publications
-* MLE+ Original.
-* Campus Integrated Modeling.
+* Willy Bernal, Madhur Behl, Truong Nghiem, and Rahul Mangharam, ["MLE+: A Tool for Integrated Design and Deployment of Energy Efficient Building Controls"](http://repository.upenn.edu/mlab_papers/51/), . October 2012.
+* Willy Bernal, Madhur Behl, Truong X. Nghiem, and Rahul Mangharam, ["Campus-Wide Integrated Building Energy Simulation"](http://repository.upenn.edu/cgi/viewcontent.cgi?article=1104&context=mlab_papers), IBPSA Building Simulation Conference, International Building Performance Simulation . December 2015.
 * AWS paper.
 
 # Simulink Block Configuration
