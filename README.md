@@ -54,14 +54,29 @@ The following versions have been tested and should be running without problems.
   * Matlab 2012b, 2013b, 2015a.
   * EnergyPlus 8.1, 8.2, 8.3, 8.4, 8.5.
 
+# Examples
+1. Legacy example:
+2. MPC example:
+3. Augmented simulation capabilities:
+4. Integrated Campus Modeling examples:
+
+# MLE+ Tutorial
+1. You can find more information about setting up the EnergyPlus file.
+2. Building Control Test Bed (BCVTB) 
+3. Please find the mlep tutorial for this repo [here](./doc/tutorial/tutorial.pdf)
+
 # MLE+ Projects
+1. SPL HIL.
+2. Integrated Campus Modeling framework.
+3. Microgrid testing.
 
 # Awards
+1. Best demo presentation.
 
 # Publications
-* MLE+ Original
-* Campus Integrated Modeling
-* AWS paper
+* MLE+ Original.
+* Campus Integrated Modeling.
+* AWS paper.
 
 # Simulink Block Configuration
 Windows Configuration:
