@@ -91,14 +91,3 @@ Windows Configuration:
 Mac Configuration:
 
 <img align="middle" src="./mle+/figs/mlep_settings_mac.png" height="450">
-
-# Troubleshooting
-<img align="middle" src="./mle+/figs/AcceptTimeOut_Error.png" height="200">
-* If you got the previous error message, your MLE+ settings (in Simulink block) ARE MOST LIKELY NOT correctly set.
-* Double check your settings according to the section on Simulink Block Configuration.
-
-Other Types of eror might be trying to run an IDF file version with the wrong E+ executable version. 
-* Get further insight to the erorr by checking **mlep.log** & **eplus_name_file.err** 
-
-<img align="middle" src="./mle+/figs/Debug_Files.png" height="400">
-
