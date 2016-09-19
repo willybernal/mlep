@@ -33,10 +33,10 @@ MLE+ capabilities include the following:
   **Note: The examples on the current mlep distribution will only work for a specific version of EnergyPlus. However, if you create your own examples, you should be able to run all supported EnergyPlus versions.**  
 
 4. Matlab
-  * Open Matlab and change the current directory to the **C:\software\mlep\mle+** folder that has just been created.
+  * Open Matlab and change the current directory to the **C:\software\mlep\mlep** folder that has just been created.
 
 5. Run installMlep.m
-  * In Matlab, open the installation script **installMlep.m** located in **C:\software\mlep\mle+\installMlep.m** and follow the instructions included in the file.
+  * In Matlab, open the installation script **installMlep.m** located in **C:\software\mlep\mlep\installMlep.m** and follow the instructions included in the file.
   * According to the file instructions, add the **EnergyPlus path** (e.g. 'C:\EnergyPlusV8-3-0') and the **Java path** (e.g. 'C:\Program Files\Java\jre1.8.0_51\bin'). After the modifications running the script will add the necessary paths to the Matlab environment.
 
   **NOTE: Please read further installation instructions on installMlep.m**
@@ -86,8 +86,8 @@ Toronto, Canada.
 # Simulink Block Configuration
 Windows Configuration:
 
-<img align="middle" src="./mle+/figs/mlep_setting_windows.png" height="400">
+<img align="middle" src="./mlep/figs/mlep_setting_windows.png" height="400">
 
 Mac Configuration:
 
-<img align="middle" src="./mle+/figs/mlep_settings_mac.png" height="450">
+<img align="middle" src="./mlep/figs/mlep_settings_mac.png" height="450">
