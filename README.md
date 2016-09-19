@@ -9,8 +9,8 @@ MLE+ capabilities include the following:
 2. Co-simulation with Simulink models (Simscape).
 3. Allow advanced controls in Matlab to operate EnergyPlus buildings.
 4. Allow multiple simulation environments to cooperate.
-5. Compatible with the [Campus Energy Modeling frameworkd](https://github.com/NREL/CampusEnergyModeling).
-6. Allows to seamsless integration with Real-Time machine for Hardaware-in-the-loop simulations.
+5. Compatible with the [Campus Energy Modeling framework](https://github.com/NREL/CampusEnergyModeling).
+6. Allows to seamless integration with Real-Time machine for Hardaware-in-the-loop simulations.
 
 **NOTE:** Other two versons of MLE+ are available:
 
