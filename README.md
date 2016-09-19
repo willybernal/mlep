@@ -6,10 +6,11 @@ MLE+ is an open-source Matlab/Simulink toolbox for co-simulation with the whole-
 MLE+ capabilities include the following:
 
 1. Co-simulation with EnergyPlus.
-2. Co-simulation with models in Simulink.
+2. Co-simulation with Simulink models (Simscape).
 3. Allow advanced controls in Matlab to operate EnergyPlus buildings.
 4. Allow multiple simulation environments to cooperate.
-5. Adherance to the Campus Modeling tool.
+5. Compatible with the [Campus Energy Modeling frameworkd](https://github.com/NREL/CampusEnergyModeling).
+6. Allows to seamsless integration with Real-Time machine for Hardaware-in-the-loop simulations.
 
 **NOTE:** Other two versons of MLE+ are available:
 
@@ -32,10 +33,10 @@ MLE+ capabilities include the following:
   **Note: The examples on the current mlep distribution will only work for a specific version of EnergyPlus. However, if you create your own examples, you should be able to run all supported EnergyPlus versions.**  
 
 4. Matlab
-  * Open Matlab and change the current directory to the **C:\software\mlep\MLE+** folder that has just been created.
+  * Open Matlab and change the current directory to the **C:\software\mlep\mle+** folder that has just been created.
 
 5. Run installMlep.m
-  * In Matlab, open the installation script **installMlep.m** located in **C:\software\mlep\MLE+\installMlep.m** and follow the instructions included in the file.
+  * In Matlab, open the installation script **installMlep.m** located in **C:\software\mlep\mle+\installMlep.m** and follow the instructions included in the file.
   * According to the file instructions, add the **EnergyPlus path** (e.g. 'C:\EnergyPlusV8-3-0') and the **Java path** (e.g. 'C:\Program Files\Java\jre1.8.0_51\bin'). After the modifications running the script will add the necessary paths to the Matlab environment.
 
   **NOTE: Please read further installation instructions on installMlep.m**
@@ -53,6 +54,8 @@ The following versions have been tested and should be running without problems.
 2. **Mac:**
   * Matlab 2012b, 2013b, 2015a.
   * EnergyPlus 8.1, 8.2, 8.3, 8.4, 8.5.
+
+**Note: The current example included in this repo requires EnergyPlus 8.5. You can convert EnergyPlus files to other versions using the  [IDF Version Updater.](http://bigladdersoftware.com/epx/docs/8-5/auxiliary-programs/idf-version-updater.html)**
 
 # Examples
 1. Legacy example:
@@ -83,19 +86,19 @@ Toronto, Canada.
 # Simulink Block Configuration
 Windows Configuration:
 
-<img align="middle" src="./MLE+/figs/mlep_setting_windows.png" height="400">
+<img align="middle" src="./mle+/figs/mlep_setting_windows.png" height="400">
 
 Mac Configuration:
 
-<img align="middle" src="./MLE+/figs/mlep_settings_mac.png" height="450">
+<img align="middle" src="./mle+/figs/mlep_settings_mac.png" height="450">
 
 # Troubleshooting
-<img align="middle" src="./MLE+/figs/AcceptTimeOut_Error.png" height="200">
+<img align="middle" src="./mle+/figs/AcceptTimeOut_Error.png" height="200">
 * If you got the previous error message, your MLE+ settings (in Simulink block) ARE MOST LIKELY NOT correctly set.
 * Double check your settings according to the section on Simulink Block Configuration.
 
 Other Types of eror might be trying to run an IDF file version with the wrong E+ executable version. 
 * Get further insight to the erorr by checking **mlep.log** & **eplus_name_file.err** 
 
-<img align="middle" src="./MLE+/figs/Debug_Files.png" height="400">
+<img align="middle" src="./mle+/figs/Debug_Files.png" height="400">
 
