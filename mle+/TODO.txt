@@ -1,0 +1,1 @@
+Check paths are consistent
