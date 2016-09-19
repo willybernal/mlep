@@ -17,9 +17,13 @@ MLE+ capabilities include the following:
 1. [Legacy Version](http://txn.name/mleplus/mlep_manual.html): This is the original distribution developed by Nghiem Truong.
 2. [Graphical user interface](http://www.seas.upenn.edu/~mbehl/mleplus.html): This is graphical user interface for MLE+. This requires the graphics package from Matlab to run. 
 
-# Download & Installation
-Follow the instructions located [here]()
+# Contents
+1. [Download & Installation.](https://github.com/willybernal/mlep/wiki/Installation)
+2. [Getting Started.](https://github.com/willybernal/mlep/wiki/Getting Started)
+3. [Download & Installation.](https://github.com/willybernal/mlep/wiki/Installation)
+4. [Troubleshooting.](https://github.com/willybernal/mlep/wiki/Troubleshooting)
 
+<!--
 # Examples
 1. Legacy example:
 2. MPC example:
@@ -39,6 +43,8 @@ You can find further information in the [Troubleshooting page](https://github.co
 2. Integrated Campus Modeling framework.
 3. Microgrid testing.
 
+-->
+
 # Awards
 * [Best Demo Award at BuildSys 2012](http://www.buildsys.org/2012/),
 4th ACM Workshop On Embedded Systems For Energy-Efficiency In Buildings,
@@ -49,11 +55,7 @@ Toronto, Canada.
 * Willy Bernal, Madhur Behl, Truong X. Nghiem, and Rahul Mangharam, ["Campus-Wide Integrated Building Energy Simulation"](http://repository.upenn.edu/cgi/viewcontent.cgi?article=1104&context=mlab_papers), IBPSA Building Simulation Conference, International Building Performance Simulation . December 2015.
 * AWS paper.
 
-# Simulink Block Configuration
-Windows Configuration:
+<!--
 
-<img align="middle" src="./mlep/figs/mlep_setting_windows.png" height="400">
+-->
 
-Mac Configuration:
-
-<img align="middle" src="./mlep/figs/mlep_settings_mac.png" height="450">
