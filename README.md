@@ -17,6 +17,9 @@ MLE+ capabilities include the following:
 1. [Legacy Version](http://txn.name/mleplus/mlep_manual.html): This is the original distribution developed by Nghiem Truong.
 2. [Graphical user interface](http://www.seas.upenn.edu/~mbehl/mleplus.html): This is graphical user interface for MLE+. This requires the graphics package from Matlab to run. 
 
+# Current Version
+MLE+ examples have been updated to work with E+ 8.6.0.
+
 # User Guide
 1. [Download & Installation.](https://github.com/willybernal/mlep/wiki/Installation)
 2. [Tutorial.](https://github.com/willybernal/mlep/wiki/Tutorial)
