@@ -22,7 +22,7 @@ MLE+ examples have been updated to work with E+ 8.6.0.
 
 # User Guide
 1. [Download & Installation.](https://github.com/willybernal/mlep/wiki/Installation)
-2. [Tutorial.](https://github.com/willybernal/mlep/wiki/Tutorial)
+2. [Tutorial.](https://github.com/willybernal/mlep/wiki/Tutorial) (COMING!)
 3. [Troubleshooting.](https://github.com/willybernal/mlep/wiki/Troubleshooting)
 
 <!--
