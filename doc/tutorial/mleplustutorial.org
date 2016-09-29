@@ -1,0 +1,386 @@
+#+TITLE:     MLE+\\Getting Started and Tutorial
+#+AUTHOR:    Willy Bernal Heredia - National Renewable Energy Laboratory\\Contact: Willy.BernalHeredia@nrel.gov
+#+DESCRIPTION: 
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+#+MACRO: EP EnergyPlus
+#+MACRO: funcname /$1/
+#+LATEX_HEADER: \usepackage{siunitx}
+
+#+BEGIN_HTML
+<h2 class="subtitle">Version: 1.0</h2>
+<h2 class="subtitle">Truong Nghiem</h2>
+#+END_HTML
+
+
+* Introduction
+  
+MLE+ is an open-source Matlab/Simulink toolbox for building energy simulation, analysis, optimization and control design. At the core of MLE+ are co-simulation interfaces with multiple building energy simulation programs such as [[http://apps1.eere.energy.gov/buildings/energyplus/][EnergyPlus]]. MLE+ provides a Simulink library with a S-Function block for easy drag-and-drop implementation. Figure \ref{fig:overview} illustrates the overall structure of MLE+.
+
+*Note:* This version of MLE+ does not provide a graphical interface. 
+
+#+CAPTION: MLE+ interfaces control system toolboxes with building models and systems.
+#+LABEL:   fig:overview
+#+ATTR_LaTeX: width=12cm
+#+ATTR_HTML: width="200" 
+[[./figs/overview.pdf]]
+
+MLE+ is designed for engineers and researchers who are familiar with
+Matlab and Simulink and want to use these software tools in building
+energy research.  MLE+ is particularly useful for:
+1. *Simulation configuration:* The MLE+ front-end streamlines the
+     configuration process of linking the building model and the
+     controllers by abstracting the necessary parameters from the
+     co-simulation. This reduces setup time and configuration
+     problems.
+2. *Controller design:* MLE+ provides a control development workflow as
+     well as graphical front-ends for designing advanced control
+     strategies for buildings, in which the building simulation is
+     carried out by dedicated simulation software, such as {{{EP}}},
+     while the controllers are implemented in Matlab or Simulink.
+3. *Simulation-based optimization:* MLE+ can be used to find optimal
+     parameters or control sequences for building system designs,
+     using simulation-based nonlinear optimization.
+4. *Data analysis:* Simulation output data from {{{EP}}} can be
+     aggregated, analyzed and visualized in Matlab.
+5. *Building Energy Management System Interface:* MLE+ provides a
+     BACnet interface to develop and implement control methods for
+     real building equipment.
+6. *Matlab/Simulink environment:* MLE+ allows complete access to the
+     Matlab environment and toolboxes such as Global Optimization
+     Toolbox, System Identification Toolbox and Model Predictive
+     Control Toolbox. The user can step through the code for debugging
+     and pause the co-simulation at any time.
+
+
+* System Requirements
+
+- Windows Operating System. Currently, MLE+ is only supported in
+  Windows. However, we are working in making MLE+ compatible in the
+  Linux and Mac OS platforms.
+- MLE+ requires Matlab and/or Simulink of recent versions.  MLE+ uses
+  the [[http://www.mathworks.com/matlabcentral/fileexchange/27758][GUI Layout Toolbox]].  This is included in the MLE+
+  distribution.  MLE+ has been tested in Matlab 2011a and 2012a
+  versions[fn:: The GUI Layout Toolbox requires 2010a or
+  future version of Matlab. If you find any problems, please contact
+  the authors for further assistance].
+- Java must be enabled in Matlab. By default, Java is already enabled
+  in Matlab, so no further action is required.  The Java socket
+  library is used by MLE+ for communication with EnergyPlus.
+- EnergyPlus version 7.1.0 (latest). MLE+ should work well with
+  previous versions of EnergyPlus: versions 7.0.0 and 6.0.0.  However,
+  it has not been tested thoroughly.  We strongly recommend to
+  download EnergyPlus 7.1.0 as the example files correspond to this
+  version.
+
+
+* Installation
+
+1. Download the latest version from
+   https://github.com/mlab/mlep_v1.1/zipball/master
+   or clone the repository https://github.com/mlab/mlep_v1.1
+2. Extract all files to a directory in your computer.  Call this folder
+   =/mlep=.
+3. Open Matlab and change the current directory to the =/mlep/MLE+= folder
+   that has just been created.  In Matlab, run the installation script
+   =installMep.m= and follow the instructions.  
+
+** WINDOWS
+
+4. This will install the
+   GUI Layout Toolbox and add the necessary paths to the Matlab
+   environment automatically. After that, the installation screen in 
+   Figure \ref{fig:installScreen} will appear. Here you need to specify the 
+   paths to EnergyPlus main Directory and the path to the folder with 
+   Java binaries. Also, this will replace
+   your =RunEPlus.batch= file (in Windows).
+
+#+CAPTION: Windows MLE+ Installation Screen.
+#+LABEL:   fig:installScreen
+#+ATTR_LaTeX: width=12cm
+#+ATTR_HTML: width="200"
+[[file:figs/installation.png]]
+
+** MAC 
+
+4. This will install the
+   GUI Layout Toolbox and add the necessary paths to the Matlab
+   environment automatically. After that, the installation screen in 
+   Figure \ref{fig:installScreenMAC} will appear. Here you need to specify the 
+   paths to EnergyPlus main Directory.
+5. In MAC distributions, the orginal =runenergyplus= file in your
+   EnergyPlus Distribution (e.g. =\Applications\EnergyPlus\runenergyplus=) makes sure 
+   the EnergyPlus result files are written to the =\Output= folder and =.mat= files
+   are not deleted.
+
+#+CAPTION: MAC OS MLE+ Installation Screen.
+#+LABEL:   fig:installScreenMAC
+#+ATTR_LaTeX: width=12cm
+#+ATTR_HTML: width="200"
+[[file:figs/installationMAC.pdf]]
+ 
+** MAnual Installation
+
+6. Depending on your Matlab distribution, you might not be able to use the GUILayout 
+tool required to open the MLE+ front-end. If you run into some problems installing try 
+using the manual installation. You would need to follow this instructions .
+  
+
+* Tutorial: Shading Control Example
+
+In the following tutorial example, we will walk you through the steps
+to set up a co-simulation session with EnergyPlus from Matlab.  We
+will then design a controller in MLE+ for actuating the window blinds of a
+building simulated in EnergyPlus.
+
+** The Building
+
+A single-storied building shown in Figure \ref{fig:buildingcad}
+consists of three zones with a total floor area of 130 \{m^2} 
+#\SI{130}{\meter\squared}.
+The West zone of the building consists of a
+large window equipped with blinds/shades and is subject to strong
+solar radiation during the day.  The goal is to control the window
+shade deployment of the West zone such that the transmitted solar
+radiation (through the window) never exceeds a certain threshold.  The
+window blinds can be controlled using two EnergyPlus variables:
+- =Shading_Deployment_Status= controls whether the blinds are deployed
+  or not;
+- =ShadeAngle_Schedule= controls the slat angle so it is perpendicular
+  to the incident solar radiation whenever the blinds are deployed.
+
+
+#+CAPTION: EnergyPlus window shading control model.
+#+LABEL:   fig:buildingcad
+#+ATTR_LaTeX: width=12cm
+#+ATTR_HTML: width="200"
+[[file:figs/buildingcad.jpg]]
+
+We will design a controller in MLE+ which monitors the angle and
+intensity of the solar radiation incident on the West zone window.  If
+the incident solar radiation exceeds a certain threshold, the blinds
+will be deployed and the shade angle will be set to reduce the
+possibility of glare.
+
+
+** The MLE+ Control Design Workflow
+
+The control design workflow of MLE+ defines a sequence of steps for
+designing a controller in Matlab for a building model simulated by
+EnergyPlus.  A graphical front-end is provided to support this
+workflow.  To start the front-end, execute the command =mlep= in
+Matlab. This will open a graphical interface as shown in Figure
+\ref{fig:startupgui}.
+
+
+#+CAPTION: Graphical front-end for the MLE+ control design workflow.
+#+LABEL:   fig:startupgui
+#+ATTR_LaTeX: width=12cm
+#+ATTR_HTML: width="200"
+[[file:figs/start.png]]
+
+
+
+** Set Up EnergyPlus Simulation Model
+
+First, we need to specify the EnergyPlus building model and the
+weather profile to be used for simulation (Figure \ref{fig:startupgui}).
+- Click the button *Select IDF file* and select the file
+  =EMSWindowShadeControl.idf= located in the folder =/ShadingProject=.
+- Click the button *Select weather file* and select the weather file
+  =USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw=.  We will use the
+  weather profile of Chicago for our simulation.
+
+
+** Configure Input and Output Variables Between EnergyPlus and Matlab
+
+We will set up the input and output variables to be exchanged between
+EnergyPlus and Matlab for co-simulation. An input variable serves as
+an input to EnergyPlus at each step of the co-simulation, while output
+variables are those which can be repeatedly read from EnergyPlus to
+monitor its internal state.
+
+#+CAPTION: MLE+ control design tab.
+#+LABEL:   fig:control
+#+ATTR_LaTeX: width=12cm
+#+ATTR_HTML: width="200"
+[[file:figs/control.png]]
+
+1. Select the Control Tab (Figure \ref{fig:control})
+2. In the Control Tab, push the *Variable* button to open the Variable
+   Configuration Window (Figure \ref{fig:variable}).
+3. Load the =.idf= file by pushing the *Load IDF* button. This
+   will list the available =ExternalInterface:Schedule=,
+   =ExternalInterface:Actuator= and =ExternalInterface:Variable=
+   objects from the idf file. It will also list the available
+   =Output:Variable= objects.
+4. Add the necessary inputs and outputs to have the settings specified
+   in (Figure \ref{fig:input}) and (Figure \ref{fig:output}),
+   respectively.  In this example, we specify
+   =Shading_Deployment_Status= and =ShadeAngle_Schedule= as the inputs
+   to EnergyPlus as these are the variables that we will control
+   through MLE+. Make sure your configuration is exactly the same as
+   the one shown in (Figure \ref{fig:input}) and (Figure
+   \ref{fig:output}).
+5. Once the input and output variables had been set, push the green
+   button *Write Variables.cfg*. This file will create a file
+   with the communication configuration between Matlab and
+   EnergyPlus. It should be printed in the Matlab command line.
+6. Close the Variable Configuration Window. Either click on the *Close Screen*
+   or the *X*.
+
+
+In MLE+, an alias can be specified for each of the variables (Figure \ref{fig:input} and Figure \ref{fig:output}). 
+The alias allows the user to reference a variable with a more intuitive name and avoid the intricate names specified by EnergyPlus.
+For instance, the EnergyPlus variable =Zn001_Wall001_Win001_Shading_Deployment_Status= can be assigned a more intuitive name as =ShadeStatus=.
+
+#+CAPTION: Variable configuration window.
+#+LABEL:   fig:variable
+#+ATTR_LaTeX: width=12cm
+#+ATTR_HTML: width="200"
+[[file:figs/variables.png]]
+
+
+#+CAPTION: Configuration of input variables to EnergyPlus.
+#+LABEL:   fig:input
+#+ATTR_LaTeX: width=12cm
+#+ATTR_HTML: width="200"
+[[file:figs/variableInput.png]]
+
+
+#+CAPTION: Configuration of output variables to EnergyPlus.
+#+LABEL:   fig:output
+#+ATTR_LaTeX: width=12cm
+#+ATTR_HTML: width="200"
+[[file:figs/variableOutput.png]]
+
+
+
+** Design a Shading Controller
+
+In the control tab, we will specify
+the building controller, implemented in Matlab, for our building model (Figure \ref{fig:control1}).
+1. Push the button *Load Control File* and select the file
+   =control_file_blind_angle.m=.  This file contains the Matlab code
+   for the shading controller.
+2. View and edit this file by clicking the button *Edit Control File.*
+   You can also create a template file for your own feedback loop by clicking 
+   on *Create Control File.* This creates the file =controlFile.m=.
+
+
+The input and output variables specified by the user are referred to
+by their aliases throughout the control file as shown in Figure
+\ref{fig:code}.  In the code snippet shown in Figure \ref{fig:code}
+the value of the incident solar radiation is compared against the
+threshold (\SI{100}{\watt\per\meter\squared}) to determine if the
+shades will be deployed.
+
+
+#+CAPTION: MLE+ control design tab.
+#+LABEL:   fig:control1
+#+ATTR_LaTeX: width=12cm
+#+ATTR_HTML: width="200"
+[[file:figs/control1.png]]
+
+
+#+CAPTION: Matlab code snippet of the shading controller (notice alias variables).
+#+LABEL:   fig:code
+#+ATTR_LaTeX: width=12cm
+#+ATTR_HTML: width="200"
+[[file:figs/code.pdf]]
+
+
+
+** Simulation and Assessment
+
+#+CAPTION: Plot and analyze simulation results of EnergyPlus.
+#+LABEL:   fig:simulate
+#+ATTR_LaTeX: width=12cm
+#+ATTR_HTML: width="200"
+[[file:figs/simulate.png]]
+
+
+
+Once a control design has been completed, we can run the simulation or
+step through it using the Matlab debugging environment.
+
+1. Click on the tab *Simulate* then click on button *Run Simulation*
+   This will call EnergyPlus to run the building energy simulation
+   with the parameters we have specified.
+2. A Windows command window will open and will show the progress of
+   the simulation.
+3. After the co-simulation has finished, MLE+ extracts and parses all
+   output variables generated by EnergyPlus, then lists them in a
+   listbox (see Figure \ref{fig:simulate}).  Select one or multiple
+   variables, then click the button *Plot* to display them on the screen.
+4. You can also save the data to the Matlab workspace by clicking the
+   buttons *Save all* or *Save Selected*
+5. The building geometry is visualized in tab *Building.*
+
+	
+Note that MLE+ decouples the simulation engine and the controller
+implementation.  This way we can tune the control scheme in Matlab,
+then assess its performance by running multiple simulations without
+the need of modifying the EnergyPlus file.
+
+
+
+** Load, Save and Reset Project Data
+
+At the bottom of the window, you can find buttons to load a control
+design project from a file, save a project to a file, and reset the
+current project data.  A project file has the extension =.prj= and
+contains all essential information of a control design project.
+
+1. *Load Project:* open previously saved projects.
+2. *Save Project:* save all the configuration settings which have been
+   entered so far to a file.  Note that this does not save your
+   controller file, or your =.idf= file.
+3. *Reset Project:* empty all fields in the graphical front-end.  Note that this will
+   not erase the current project file, but only reset the
+   configuration settings in the graphical front-end.
+4. *Exit:* exit the program.
+
+
+For your convenience, a project file for the tutorial example is
+included in the distribution.  You can load the project file
+=ShadingProject.prj= and switch directly to the tab *Simulate* to
+run a simulation of the control design.
+
+
+
+
+* Other Examples
+
+** Legacy Example
+This folder contains the original example distributed with MLE+ Legacy. This example does
+not make use of the MLE+ front end. You can run this example by
+executing runsimple.m in Matlab. This example sets the Temperature Setpoints for a small building. 
+
+
+** Green Scheduling vs. Uncoordinated Control
+Here we compared two different binary (ON/OFF) controls for keeping
+the temperature of a small building inside the comfort level. 
+Green Scheduling is a control
+scheme designed to reduce peak power consumption while satisfying the
+temperature conditions. You can load these projects by using the *Load
+Project* button.
+
+
+** MPC vs. Proportional Control
+These two cases implement continuous control schemes. The first control is a Model 
+Predictive controller using built-in functions in
+Matlab. This is compared against a very simple proportional feedback
+loop. The model for the first strategy was generated using the *System
+Identification tab* in MLE+. This tab allows you to design the disturbances
+you feed your model for SYSID. Then, you can import this model directly into the Matlab's built-in
+system identification toolbox.  
+
