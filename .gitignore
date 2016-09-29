@@ -20,6 +20,7 @@ super_grt_rtw
 # Matlab
 *.autosave
 *~
+*.slx.unknown_version
 
 # MLE+
 *.6

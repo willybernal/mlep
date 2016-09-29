@@ -1,0 +1,18 @@
+\contentsline {section}{\numberline {1}Introduction}{1}{section.1}
+\contentsline {section}{\numberline {2}System Requirements}{3}{section.2}
+\contentsline {section}{\numberline {3}Installation}{4}{section.3}
+\contentsline {subsection}{\numberline {3.1}WINDOWS}{4}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}MAC}{4}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}MAnual Installation}{5}{subsection.3.3}
+\contentsline {section}{\numberline {4}Tutorial: Shading Control Example}{5}{section.4}
+\contentsline {subsection}{\numberline {4.1}The Building}{6}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}The MLE+ Control Design Workflow}{8}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Set Up EnergyPlus Simulation Model}{8}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}Configure Input and Output Variables Between EnergyPlus and Matlab}{9}{subsection.4.4}
+\contentsline {subsection}{\numberline {4.5}Design a Shading Controller}{10}{subsection.4.5}
+\contentsline {subsection}{\numberline {4.6}Simulation and Assessment}{11}{subsection.4.6}
+\contentsline {subsection}{\numberline {4.7}Load, Save and Reset Project Data}{13}{subsection.4.7}
+\contentsline {section}{\numberline {5}Other Examples}{15}{section.5}
+\contentsline {subsection}{\numberline {5.1}Legacy Example}{15}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Green Scheduling vs. Uncoordinated Control}{16}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}MPC vs. Proportional Control}{16}{subsection.5.3}

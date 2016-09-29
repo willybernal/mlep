@@ -37,11 +37,11 @@ manualInstall = true;
 % Paths
 if ispc
     % Windows
-    eplusPath = 'C:\EnergyPlusV8-3-0';
+    eplusPath = 'C:\EnergyPlusV8-6-0';
     javaPath = 'C:\Program Files\Java\jre1.8.0_91\bin';
 else
     % Unix
-    eplusPath = '/Applications/EnergyPlus-8-3-0';
+    eplusPath = '/Applications/EnergyPlus-8-6-0';
 end
 
 %% DO NOT MODIFY
@@ -51,14 +51,14 @@ filename = mfilename('fullpath');
 
 % Add Path
 % addpath(mlepPath);
-addpath(genpath(fullfile(mlepPath,'MLE+','core')));
+addpath(genpath(fullfile(mlepPath,'mlep','core')));
 % addpath(fullfile(mlepPath,'gui'));
-addpath(genpath(fullfile(mlepPath,'MLE+','install')));
+addpath(genpath(fullfile(mlepPath,'mlep','install')));
 %addpath(fullfile(mlepPath,'settings'));
-addpath(genpath(fullfile(mlepPath,'MLE+','version')));
+addpath(genpath(fullfile(mlepPath,'mlep','version')));
 % addpath(fullfile(mlepPath,'mlepHelp'));
-addpath(genpath(fullfile(mlepPath,'MLE+','library')));
-bcvtbPath = fullfile(mlepPath,'MLE+','bcvtb');
+addpath(genpath(fullfile(mlepPath,'mlep','library')));
+bcvtbPath = fullfile(mlepPath,'mlep','bcvtb');
 addpath(genpath(bcvtbPath));
 
 % Installation Dialog
