@@ -37,11 +37,11 @@ manualInstall = true;
 % Paths
 if ispc
     % Windows
-    eplusPath = 'C:\EnergyPlusV8-6-0';
-    javaPath = 'C:\Program Files\Java\jre1.8.0_91\bin';
+    eplusPath = 'C:\EnergyPlusV9-1-0';
+    javaPath = 'C:\Program Files (x86)\Java\jre1.8.0_201\bin';
 else
     % Unix
-    eplusPath = '/Applications/EnergyPlus-8-6-0';
+    eplusPath = '/Applications/EnergyPlus-9-1-0';
 end
 
 %% DO NOT MODIFY

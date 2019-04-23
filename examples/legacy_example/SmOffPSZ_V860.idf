@@ -69,7 +69,7 @@
 ! Environmental Emissions:        None
 ! Utility Tariffs:                None
 
-  Version,9.1;
+  Version,8.6;
 
   ExternalInterface,
     PtolemyServer;           !- Name of External Interface
@@ -103,17 +103,14 @@
     ,                        !- Name
     6,                       !- Begin Month
     16,                      !- Begin Day of Month
-    ,                        !- Begin Year
     6,                       !- End Month
     19,                      !- End Day of Month
-    ,                        !- End Year
     Tuesday,                 !- Day of Week for Start Day
     Yes,                     !- Use Weather File Holidays and Special Days
     Yes,                     !- Use Weather File Daylight Saving Period
     No,                      !- Apply Weekend Holiday Rule
     Yes,                     !- Use Weather File Rain Indicators
-    Yes,                     !- Use Weather File Snow Indicators
-    ;                        !- Treat Weather as Actual
+    Yes;                     !- Use Weather File Snow Indicators
 
   Site:Location,
     CHICAGO_IL_USA TMY2-94846,  !- Name
@@ -831,6 +828,7 @@
     EWall,                   !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
     0.5,                     !- View Factor to Ground
+    ,                        !- Shading Control Name
     ,                        !- Frame and Divider Name
     1.0,                     !- Multiplier
     4,                       !- Number of Vertices
@@ -846,6 +844,7 @@
     SWall,                   !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
     0.5,                     !- View Factor to Ground
+    ,                        !- Shading Control Name
     ,                        !- Frame and Divider Name
     1.0,                     !- Multiplier
     4,                       !- Number of Vertices
@@ -861,6 +860,7 @@
     WWall,                   !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
     0.5,                     !- View Factor to Ground
+    ,                        !- Shading Control Name
     ,                        !- Frame and Divider Name
     1.0,                     !- Multiplier
     4,                       !- Number of Vertices
@@ -876,6 +876,7 @@
     zE-W-5,                  !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
     0.5,                     !- View Factor to Ground
+    ,                        !- Shading Control Name
     ,                        !- Frame and Divider Name
     1.0,                     !- Multiplier
     4,                       !- Number of Vertices
@@ -891,6 +892,7 @@
     NWall,                   !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
     0.5,                     !- View Factor to Ground
+    ,                        !- Shading Control Name
     ,                        !- Frame and Divider Name
     1.0,                     !- Multiplier
     4,                       !- Number of Vertices
@@ -906,6 +908,7 @@
     zE-W-8,                  !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
     0.5,                     !- View Factor to Ground
+    ,                        !- Shading Control Name
     ,                        !- Frame and Divider Name
     1.0,                     !- Multiplier
     4,                       !- Number of Vertices
@@ -921,6 +924,7 @@
     zE-W-11,                 !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
     0.5,                     !- View Factor to Ground
+    ,                        !- Shading Control Name
     ,                        !- Frame and Divider Name
     1.0,                     !- Multiplier
     4,                       !- Number of Vertices
@@ -936,6 +940,7 @@
     zE-W-13,                 !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
     0.5,                     !- View Factor to Ground
+    ,                        !- Shading Control Name
     ,                        !- Frame and Divider Name
     1.0,                     !- Multiplier
     4,                       !- Number of Vertices
@@ -951,6 +956,7 @@
     zE-W-15,                 !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
     0.5,                     !- View Factor to Ground
+    ,                        !- Shading Control Name
     ,                        !- Frame and Divider Name
     1.0,                     !- Multiplier
     4,                       !- Number of Vertices
@@ -966,6 +972,7 @@
     zE-W-17,                 !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
     0.5,                     !- View Factor to Ground
+    ,                        !- Shading Control Name
     ,                        !- Frame and Divider Name
     1.0,                     !- Multiplier
     4,                       !- Number of Vertices
@@ -981,6 +988,7 @@
     zE-W-19,                 !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
     0.5,                     !- View Factor to Ground
+    ,                        !- Shading Control Name
     ,                        !- Frame and Divider Name
     1.0,                     !- Multiplier
     4,                       !- Number of Vertices
@@ -996,6 +1004,7 @@
     zE-W-21,                 !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
     0.5,                     !- View Factor to Ground
+    ,                        !- Shading Control Name
     ,                        !- Frame and Divider Name
     1.0,                     !- Multiplier
     4,                       !- Number of Vertices
@@ -1361,7 +1370,7 @@
     EquipmentLevel,          !- Design Level Calculation Method
     726,                     !- Design Level {W}
     ,                        !- Power per Zone Floor Area {W/m2}
-    ,                        !- Power per Person {W/person}
+    ,                        !- Power per Person {W/Person}
     0,                       !- Fraction Latent
     0.7,                     !- Fraction Radiant
     0;                       !- Fraction Lost
@@ -1909,7 +1918,7 @@
     ZSF1Inlet,               !- Zone Air Inlet Node or NodeList Name
     ,                        !- Zone Air Exhaust Node or NodeList Name
     ZSF1 Node,               !- Zone Air Node Name
-    ZSF1 Outlet Node;        !- Zone Return Air Node or NodeList Name
+    ZSF1 Outlet Node;        !- Zone Return Air Node Name
 
   ZoneHVAC:EquipmentConnections,
     ZNF1,                    !- Zone Name
@@ -1917,7 +1926,7 @@
     ZNF1Inlet,               !- Zone Air Inlet Node or NodeList Name
     ,                        !- Zone Air Exhaust Node or NodeList Name
     ZNF1 Node,               !- Zone Air Node Name
-    ZNF1 Outlet Node;        !- Zone Return Air Node or NodeList Name
+    ZNF1 Outlet Node;        !- Zone Return Air Node Name
 
   ZoneHVAC:EquipmentConnections,
     ZSF2,                    !- Zone Name
@@ -1925,7 +1934,7 @@
     ZSF2Inlet,               !- Zone Air Inlet Node or NodeList Name
     ,                        !- Zone Air Exhaust Node or NodeList Name
     ZSF2 Node,               !- Zone Air Node Name
-    ZSF2 Outlet Node;        !- Zone Return Air Node or NodeList Name
+    ZSF2 Outlet Node;        !- Zone Return Air Node Name
 
   ZoneHVAC:EquipmentConnections,
     ZNF2,                    !- Zone Name
@@ -1933,7 +1942,7 @@
     ZNF2Inlet,               !- Zone Air Inlet Node or NodeList Name
     ,                        !- Zone Air Exhaust Node or NodeList Name
     ZNF2 Node,               !- Zone Air Node Name
-    ZNF2 Outlet Node;        !- Zone Return Air Node or NodeList Name
+    ZNF2 Outlet Node;        !- Zone Return Air Node Name
 
   ZoneControl:Thermostat,
     South zone1,             !- Name
@@ -1970,43 +1979,31 @@
 
   ZoneHVAC:EquipmentList,
     ZSF1Equipment,           !- Name
-    SequentialLoad,          !- Load Distribution Scheme
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZSF1DirectAir,           !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
-    ,                        !- Zone Equipment 1 Sequential Cooling Fraction
-    ;                        !- Zone Equipment 1 Sequential Heating Fraction
+    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
 
   ZoneHVAC:EquipmentList,
     ZNF1Equipment,           !- Name
-    SequentialLoad,          !- Load Distribution Scheme
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZNF1DirectAir,           !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
-    ,                        !- Zone Equipment 1 Sequential Cooling Fraction
-    ;                        !- Zone Equipment 1 Sequential Heating Fraction
+    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
 
   ZoneHVAC:EquipmentList,
     ZSF2Equipment,           !- Name
-    SequentialLoad,          !- Load Distribution Scheme
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZSF2DirectAir,           !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
-    ,                        !- Zone Equipment 1 Sequential Cooling Fraction
-    ;                        !- Zone Equipment 1 Sequential Heating Fraction
+    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
 
   ZoneHVAC:EquipmentList,
     ZNF2Equipment,           !- Name
-    SequentialLoad,          !- Load Distribution Scheme
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZNF2DirectAir,           !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
-    ,                        !- Zone Equipment 1 Sequential Cooling Fraction
-    ;                        !- Zone Equipment 1 Sequential Heating Fraction
+    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZSF1DirectAir,           !- Name
@@ -2238,8 +2235,7 @@
     WindACCoolCapFFF,        !- Total Cooling Capacity Function of Flow Fraction Curve Name
     WindACEIRFT,             !- Energy Input Ratio Function of Temperature Curve Name
     WindACEIRFFF,            !- Energy Input Ratio Function of Flow Fraction Curve Name
-    WindACPLFFPLR,           !- Part Load Fraction Correlation Curve Name
-    ;                        !- Minimum Outdoor Dry-Bulb Temperature for Compressor Operation {C}
+    WindACPLFFPLR;           !- Part Load Fraction Correlation Curve Name
 
   Coil:Cooling:DX:SingleSpeed,
     ACDXCoil 2,              !- Name
@@ -2255,8 +2251,7 @@
     WindACCoolCapFFF,        !- Total Cooling Capacity Function of Flow Fraction Curve Name
     WindACEIRFT,             !- Energy Input Ratio Function of Temperature Curve Name
     WindACEIRFFF,            !- Energy Input Ratio Function of Flow Fraction Curve Name
-    WindACPLFFPLR,           !- Part Load Fraction Correlation Curve Name
-    ;                        !- Minimum Outdoor Dry-Bulb Temperature for Compressor Operation {C}
+    WindACPLFFPLR;           !- Part Load Fraction Correlation Curve Name
 
   Coil:Cooling:DX:SingleSpeed,
     ACDXCoil 3,              !- Name
@@ -2272,8 +2267,7 @@
     WindACCoolCapFFF,        !- Total Cooling Capacity Function of Flow Fraction Curve Name
     WindACEIRFT,             !- Energy Input Ratio Function of Temperature Curve Name
     WindACEIRFFF,            !- Energy Input Ratio Function of Flow Fraction Curve Name
-    WindACPLFFPLR,           !- Part Load Fraction Correlation Curve Name
-    ;                        !- Minimum Outdoor Dry-Bulb Temperature for Compressor Operation {C}
+    WindACPLFFPLR;           !- Part Load Fraction Correlation Curve Name
 
   Coil:Cooling:DX:SingleSpeed,
     ACDXCoil 4,              !- Name
@@ -2289,8 +2283,7 @@
     WindACCoolCapFFF,        !- Total Cooling Capacity Function of Flow Fraction Curve Name
     WindACEIRFT,             !- Energy Input Ratio Function of Temperature Curve Name
     WindACEIRFFF,            !- Energy Input Ratio Function of Flow Fraction Curve Name
-    WindACPLFFPLR,           !- Part Load Fraction Correlation Curve Name
-    ;                        !- Minimum Outdoor Dry-Bulb Temperature for Compressor Operation {C}
+    WindACPLFFPLR;           !- Part Load Fraction Correlation Curve Name
 
   Fan:ConstantVolume,
     Supply Fan 1,            !- Name
@@ -2500,8 +2493,7 @@
     Temperature,             !- Schedule Type Limits Name
     20;                      !- Initial Value
 
-  Output:SQLite,
-    Simple;                  !- Option Type
+  Output:SQLite, Simple;
 
   Output:Variable,TSetHea,Schedule Value,TimeStep;
 
@@ -2523,7 +2515,7 @@
 
   Output:Variable,*,Cooling Coil Sensible Cooling Rate,timestep;
 
-  Output:Variable,*,Heating Coil Heating Rate,timestep;
+  Output:Variable,*,Heating Coil Air Heating Rate,timestep;
 
   Output:Meter,Cooling:Electricity,monthly;
 

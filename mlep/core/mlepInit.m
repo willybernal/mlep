@@ -6,7 +6,7 @@ function mlepInit(eplusDir, javaDir, bcvtbDir)
 % Generally, this is only necessary on Windows machines.  On
 % Linux/MacOS, the default settings often work.
 %
-% (C) 2013 by Willy Bernal (willyg@seas.upenn.edu)
+% (C) 2013 by Willy Bernal (willy.bernalheredia@nrel.gov)
 
 % Last update: 2013-06-24 by Willy Bernal
 global MLEPSETTINGS

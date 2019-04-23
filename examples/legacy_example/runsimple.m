@@ -30,7 +30,7 @@
 
 ep = mlepProcess;
 ep.arguments = {'SmOffPSZ', 'USA_IL_Chicago-OHare.Intl.AP.725300_TMY3'};
-ep.acceptTimeout = 6000;
+ep.acceptTimeout = 10000;
 
 VERNUMBER = 2;  % version number of communication protocol (2 for E+ 7.2.0)
 

@@ -290,7 +290,9 @@ end
 if ispc
     [status,~] = system([cmd ' &'],'-echo'); %  '> mlep.log &' ,'-echo'
 else
-    [status,~] = system([cmd ' > mlep.log &'] ,'-echo'); %  '> mlep.log &' ,'-echo'
+%    [status,~] = system([cmd ' > mlep.log &'] ,'-echo'); %  '> mlep.log &' ,'-echo'
+%    [status,~] = system([cmd ' &'],'-echo'); %  '> mlep.log &' ,'-echo'
+    [status,~] = system([cmd ' &']); %  '> mlep.log &' ,'-echo'
 end
 
 % Process id - not used
