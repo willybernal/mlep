@@ -18,7 +18,7 @@ MLE+ capabilities include the following:
 2. [Graphical user interface](http://www.seas.upenn.edu/~mbehl/mleplus.html): This is graphical user interface for MLE+. This requires the graphics package from Matlab to run. 
 
 # Current Version
-MLE+ examples have been updated to work with E+ 8.6.0.
+MLE+ examples have been updated to work with E+ 9.1.0. **You can use any E+ version as long as your E+ installation and the idf file version agree. Just make sure your settings in installMlep.m are in agreement.**
 
 # User Guide
 1. [Download & Installation.](https://github.com/willybernal/mlep/wiki/Installation)
